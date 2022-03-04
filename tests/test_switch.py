@@ -1,4 +1,5 @@
 """Test ju_control switch."""
+import pytest
 from unittest.mock import call, patch
 
 from homeassistant.components.switch import SERVICE_TURN_OFF, SERVICE_TURN_ON
@@ -11,6 +12,7 @@ from custom_components.ju_control.const import DEFAULT_NAME, DOMAIN, SWITCH
 from .const import MOCK_CONFIG
 
 
+@pytest.mark.skip(reason="switch is currently deactivated")
 async def test_switch_services(hass):
     """Test switch services."""
     # Create a mock entry so we don't have to go through config flow
