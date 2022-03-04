@@ -1,4 +1,4 @@
-"""Switch platform for integration_blueprint."""
+"""Switch platform for ju_control."""
 from homeassistant.components.switch import SwitchEntity
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, SWITCH
@@ -12,7 +12,7 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
 
 class IntegrationBlueprintBinarySwitch(IntegrationBlueprintEntity, SwitchEntity):
-    """integration_blueprint switch class."""
+    """ju_control switch class."""
 
     async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument
         """Turn on the switch."""
