@@ -2,16 +2,16 @@
 from homeassistant.components.switch import SwitchEntity
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, SWITCH
-from .entity import IntegrationBlueprintEntity
+from .entity import JuControlEntity
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
     """Setup sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationBlueprintBinarySwitch(coordinator, entry)])
+    async_add_devices([JuControlBinarySwitch(coordinator, entry)])
 
 
-class IntegrationBlueprintBinarySwitch(IntegrationBlueprintEntity, SwitchEntity):
+class JuControlBinarySwitch(JuControlEntity, SwitchEntity):
     """ju_control switch class."""
 
     async def async_turn_on(self, **kwargs):  # pylint: disable=unused-argument

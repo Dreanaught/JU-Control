@@ -2,16 +2,16 @@
 from homeassistant.components.sensor import SensorEntity
 
 from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
-from .entity import IntegrationBlueprintEntity
+from .entity import JuControlEntity
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
     """Setup sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationBlueprintSensor(coordinator, entry)])
+    async_add_devices([JuControlSensor(coordinator, entry)])
 
 
-class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
+class JuControlSensor(JuControlEntity, SensorEntity):
     """ju_control Sensor class."""
 
     @property

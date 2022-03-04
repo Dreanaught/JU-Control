@@ -13,7 +13,7 @@ from .const import (
 )
 
 
-class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
+class JuControlFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Blueprint."""
 
     VERSION = 1
@@ -54,7 +54,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     @staticmethod
     @callback
     def async_get_options_flow(config_entry):
-        return BlueprintOptionsFlowHandler(config_entry)
+        return JuControlOptionsFlowHandler(config_entry)
 
     async def _show_config_form(self, user_input):  # pylint: disable=unused-argument
         """Show the configuration form to edit location data."""
@@ -81,7 +81,7 @@ class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         return False
 
 
-class BlueprintOptionsFlowHandler(config_entries.OptionsFlow):
+class JuControlOptionsFlowHandler(config_entries.OptionsFlow):
     """Blueprint config flow options handler."""
 
     def __init__(self, config_entry):

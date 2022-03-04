@@ -1,11 +1,11 @@
 """Constants for ju_control."""
 # Base component constants
-NAME = "Integration blueprint"
+NAME = "JU-Control"
 DOMAIN = "ju_control"
 DOMAIN_DATA = f"{DOMAIN}_data"
 VERSION = "0.0.1"
-ATTRIBUTION = "Data provided by http://jsonplaceholder.typicode.com/"
-ISSUE_URL = "https://github.com/custom-components/ju_control/issues"
+ATTRIBUTION = "Data provided by https://www.myjudo.eu/"
+ISSUE_URL = "https://github.com/Dreanaught/JU-Control/issues"
 
 # Icons
 ICON = "mdi:format-quote-close"

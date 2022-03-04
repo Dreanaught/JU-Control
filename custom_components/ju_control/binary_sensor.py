@@ -7,16 +7,16 @@ from .const import (
     DEFAULT_NAME,
     DOMAIN,
 )
-from .entity import IntegrationBlueprintEntity
+from .entity import JuControlEntity
 
 
 async def async_setup_entry(hass, entry, async_add_devices):
     """Setup binary_sensor platform."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
-    async_add_devices([IntegrationBlueprintBinarySensor(coordinator, entry)])
+    async_add_devices([JuControlBinarySensor(coordinator, entry)])
 
 
-class IntegrationBlueprintBinarySensor(IntegrationBlueprintEntity, BinarySensorEntity):
+class JuControlBinarySensor(JuControlEntity, BinarySensorEntity):
     """ju_control binary_sensor class."""
 
     @property
