@@ -24,7 +24,8 @@ class JuControlSensor(JuControlEntity, SensorEntity):
         """Return the native value of the sensor."""
         return self.coordinator.data.get("body")
 
-    @property
-    def icon(self):
-        """Return the icon of the sensor."""
-        return ICON
+
+#    @property
+#    def icon(self):
+#        """Return the icon of the sensor."""
+#        return ICON
