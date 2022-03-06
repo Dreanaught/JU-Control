@@ -21,9 +21,12 @@ from .const import MOCK_CONFIG
 # actual functionality of the integration in other test modules.
 @pytest.fixture(autouse=True)
 def bypass_setup_fixture():
-    """Prevent setup."""
+    """Prevent setup, prevent call to login"""
     with patch("custom_components.ju_control.async_setup", return_value=True,), patch(
         "custom_components.ju_control.async_setup_entry",
+        return_value=True,
+    ), patch(
+        "custom_components.ju_control.api.JuControlApiClient.log_in",
         return_value=True,
     ):
         yield
