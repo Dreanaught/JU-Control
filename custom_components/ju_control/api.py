@@ -31,6 +31,7 @@ class JuControlApiClient:
         self._token = None
 
     async def log_in(self) -> bool:
+        """Log in to remote service."""
         query = {
             "group": "register",
             "command": "login",
@@ -50,8 +51,15 @@ class JuControlApiClient:
 
     async def async_get_data(self) -> dict:
         """Get data from the API."""
-        url = "https://jsonplaceholder.typicode.com/posts/1"
-        return await self.api_wrapper("get", url)
+        query = {
+            "token": self._token,
+            "group": "register",
+            "command": "get device data",
+        }
+        url = BASE_URL.with_query(query)
+        device_data = await self.api_wrapper("get", url)
+        entity_data = self.parse_device_data(device_data)
+        return entity_data
 
     async def async_set_title(self, value: str) -> None:
         """Get data from the API."""
@@ -98,3 +106,56 @@ class JuControlApiClient:
             )
         except Exception as exception:  # pylint: disable=broad-except
             _LOGGER.error("Something really wrong happened! - %s", exception)
+
+    def parse_device_data(self, response_data) -> dict:
+        """Parse entity data from device data"""
+        return_data = dict()
+        status: str = response_data.get("status")
+        data = response_data.get("data")
+        # fetch data from response if status ok
+        if status.upper() == "OK":
+            for device in data:
+                serialnumber = device.get("serialnumber")
+                installation_data = device.get("installation_date")
+                online_status = device.get("status")
+                software_version = device.get("sv")
+                hardware_version = device.get("hv")
+                raw_data = device.get("data")
+                for entry in raw_data:
+                    da = entry.get("da")
+                    device_type = entry.get("dt")
+                    device_sv = entry.get("sv")
+                    device_hv = entry.get("hv")
+                    device_data = entry.get("data")
+                    valid_data = dict()
+                    for k, v in device_data.items():
+                        if k == "lu":
+                            pass
+                        elif v is None:
+                            pass
+                        elif v.get("st").upper() == "OK":
+                            _k_it = int(k)
+                            valid_data[_k_it] = v.get("data")
+            # parse values from raw data
+            _8: str = valid_data.get(8)
+            if len(_8) == 8:
+                total_water_consumed = self.split_by_two_reverse(_8)  # in liter
+            _9: str = valid_data.get(9)
+            if len(_9) == 8:
+                total_soft_water_consumed = self.split_by_two_reverse(_9)  # in liter
+            _791 = valid_data.get(791)
+            if len(_791) == 66:
+                _791 = _791.split(":")[1]
+                regeneration_count = int(_791[62:64] + _791[60:62], base=16)
+            _90 = valid_data.get(90)
+            if len(_90) == 4:
+                hardness_water_raw = int(_90[2:4] + _90[0:2], base=16)
+            _94 = valid_data.get(94)
+            # put data into entity
+            return_data["body"] = total_water_consumed
+
+        return return_data
+
+    def split_by_two_reverse(self, string) -> int:
+        reversed = string[6:8] + string[4:6] + string[2:4] + string[0:2]
+        return int(reversed, base=16)
