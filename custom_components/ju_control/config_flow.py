@@ -74,8 +74,10 @@ class JuControlFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         try:
             session = async_create_clientsession(self.hass)
             client = JuControlApiClient(username, password, session)
-            await client.async_get_data()
-            return True
+            log_in_response = await client.log_in()
+            if log_in_response:
+                await client.async_get_data()
+            return log_in_response
         except Exception:  # pylint: disable=broad-except
             pass
         return False
