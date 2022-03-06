@@ -3,8 +3,10 @@ import logging
 import asyncio
 import socket
 from typing import Optional
+import hashlib
 import aiohttp
 import async_timeout
+from yarl import URL
 
 TIMEOUT = 10
 
@@ -12,9 +14,12 @@ TIMEOUT = 10
 _LOGGER: logging.Logger = logging.getLogger(__package__)
 
 HEADERS = {"Content-type": "application/json; charset=UTF-8"}
+BASE_URL: URL = URL("https://www.myjudo.eu/").with_path("/interface")
 
 
 class JuControlApiClient:
+    """This is the JU-Control client wrapper"""
+
     def __init__(
         self, username: str, password: str, session: aiohttp.ClientSession
     ) -> None:
@@ -22,6 +27,26 @@ class JuControlApiClient:
         self._username = username
         self._password = password
         self._session = session
+        self._password_hashed = hashlib.md5(password.encode("UTF-8")).hexdigest()
+        self._token = None
+
+    async def log_in(self) -> bool:
+        query = {
+            "group": "register",
+            "command": "login",
+            "name": "login",
+            "user": self._username,
+            "password": self._password_hashed,
+            "role": "customer",
+        }
+
+        url = BASE_URL.with_query(query)
+        login_response = await self.api_wrapper("get", url)
+        if login_response.get("status").upper() == "OK":
+            self._token = login_response.get("token")
+            return True
+        else:
+            return False
 
     async def async_get_data(self) -> dict:
         """Get data from the API."""
