@@ -1,6 +1,6 @@
 """Test ju_control switch."""
-import pytest
 from unittest.mock import call, patch
+import pytest
 
 from homeassistant.components.switch import SERVICE_TURN_OFF, SERVICE_TURN_ON
 from homeassistant.const import ATTR_ENTITY_ID
