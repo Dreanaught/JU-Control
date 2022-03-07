@@ -55,8 +55,8 @@ class JuControlApiClient:
         _LOGGER.info("GetData uses token: %s", self._token)
         if self._token is None:
             successful = await log_in()
-            if not successful:
-                _LOGGER.error("LogIn during get data failed")
+            if successful:
+                _LOGGER.info("GetData uses token: %s", self._token)
         
         query = {
             "token": self._token,
