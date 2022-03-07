@@ -57,7 +57,7 @@ class JuControlApiClient:
         _LOGGER.info("GetData uses user: %s", self._username)
         _LOGGER.info("GetData uses pas: %s", self._password_hashed)
         if self._token is None:
-            successful = log_in()
+            successful = await log_in()
             if successful:
                 _LOGGER.info("GetData uses token: %s", self._token)
         
@@ -67,7 +67,8 @@ class JuControlApiClient:
             "command": "get device data",
         }
         url = BASE_URL.with_query(query)
-        device_data = self.api_wrapper("get", url)
+        device_data = await self.api_wrapper("get", url)
+        _LOGGER.info("Fetching device data returned status: %s", device_data.get("status"))
         entity_data = self.parse_device_data(device_data)
         return entity_data
 
