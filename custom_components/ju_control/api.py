@@ -29,7 +29,6 @@ class JuControlApiClient:
         self._session = session
         self._password_hashed = hashlib.md5(password.encode("UTF-8")).hexdigest()
         self._token = None
-        _LOGGER.info("User: %s, pass: %s", self._username, self._password_hashed)
 
     async def log_in(self) -> bool:
         """Log in to remote service."""
@@ -46,21 +45,15 @@ class JuControlApiClient:
         login_response = await self.api_wrapper("get", url)
         if login_response.get("status").upper() == "OK":
             self._token = login_response.get("token")
-            _LOGGER.info("LogIn returned token: %s", self._token)
             return True
         else:
             return False
 
     async def async_get_data(self) -> dict:
         """Get data from the API."""
-        _LOGGER.info("GetData uses token: %s", self._token)
-        _LOGGER.info("GetData uses user: %s", self._username)
-        _LOGGER.info("GetData uses pas: %s", self._password_hashed)
         if self._token is None:
             successful = await self.log_in()
-            if successful:
-                _LOGGER.info("GetData uses token: %s", self._token)
-        
+
         query = {
             "token": self._token,
             "group": "register",
@@ -68,7 +61,9 @@ class JuControlApiClient:
         }
         url = BASE_URL.with_query(query)
         device_data = await self.api_wrapper("get", url)
-        _LOGGER.info("Fetching device data returned status: %s", device_data.get("status"))
+        _LOGGER.info(
+            "Fetching device data returned status: %s", device_data.get("status")
+        )
         entity_data = self.parse_device_data(device_data)
         return entity_data
 
