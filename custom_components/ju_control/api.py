@@ -57,7 +57,7 @@ class JuControlApiClient:
         _LOGGER.info("GetData uses user: %s", self._username)
         _LOGGER.info("GetData uses pas: %s", self._password_hashed)
         if self._token is None:
-            successful = await log_in()
+            successful = await self.log_in()
             if successful:
                 _LOGGER.info("GetData uses token: %s", self._token)
         
