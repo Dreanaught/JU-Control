@@ -57,7 +57,7 @@ class JuControlApiClient:
         _LOGGER.info("GetData uses user: %s", self._username)
         _LOGGER.info("GetData uses pas: %s", self._password_hashed)
         if self._token is None:
-            successful = await log_in()
+            successful = log_in()
             if successful:
                 _LOGGER.info("GetData uses token: %s", self._token)
         
@@ -67,8 +67,8 @@ class JuControlApiClient:
             "command": "get device data",
         }
         url = BASE_URL.with_query(query)
-        device_data = await self.api_wrapper("get", url)
-        entity_data = await self.parse_device_data(device_data)
+        device_data = self.api_wrapper("get", url)
+        entity_data = self.parse_device_data(device_data)
         return entity_data
 
     async def async_set_title(self, value: str) -> None:
@@ -117,7 +117,7 @@ class JuControlApiClient:
         except Exception as exception:  # pylint: disable=broad-except
             _LOGGER.error("Something really wrong happened! - %s", exception)
 
-    async def parse_device_data(self, response_data) -> dict:
+    def parse_device_data(self, response_data) -> dict:
         """Parse entity data from device data"""
         return_data = dict()
         status: str = response_data.get("status")
