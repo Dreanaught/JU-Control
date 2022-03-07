@@ -45,12 +45,14 @@ class JuControlApiClient:
         login_response = await self.api_wrapper("get", url)
         if login_response.get("status").upper() == "OK":
             self._token = login_response.get("token")
+            _LOGGER.info("LogIn returned token: %s", self._token)
             return True
         else:
             return False
 
     async def async_get_data(self) -> dict:
         """Get data from the API."""
+        _LOGGER.info("GetData uses token: %s", self._token)
         query = {
             "token": self._token,
             "group": "register",
