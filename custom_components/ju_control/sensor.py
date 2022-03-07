@@ -17,7 +17,7 @@ class JuControlSensor(JuControlEntity, SensorEntity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return f"{DEFAULT_NAME}_{SENSOR}"
+        return f"{DEFAULT_NAME}_Gesamtwasserverbrauch"
 
     @property
     def native_value(self):
