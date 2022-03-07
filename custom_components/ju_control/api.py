@@ -68,7 +68,7 @@ class JuControlApiClient:
         }
         url = BASE_URL.with_query(query)
         device_data = await self.api_wrapper("get", url)
-        entity_data = self.parse_device_data(device_data)
+        entity_data = await self.parse_device_data(device_data)
         return entity_data
 
     async def async_set_title(self, value: str) -> None:
@@ -117,7 +117,7 @@ class JuControlApiClient:
         except Exception as exception:  # pylint: disable=broad-except
             _LOGGER.error("Something really wrong happened! - %s", exception)
 
-    def parse_device_data(self, response_data) -> dict:
+    async def parse_device_data(self, response_data) -> dict:
         """Parse entity data from device data"""
         return_data = dict()
         status: str = response_data.get("status")
