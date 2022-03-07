@@ -29,6 +29,7 @@ class JuControlApiClient:
         self._session = session
         self._password_hashed = hashlib.md5(password.encode("UTF-8")).hexdigest()
         self._token = None
+        _LOGGER.info("User: %s, pass: %s", self._username, self._password_hashed)
 
     async def log_in(self) -> bool:
         """Log in to remote service."""
