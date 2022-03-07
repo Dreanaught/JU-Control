@@ -82,6 +82,7 @@ async def test_failed_config_flow(hass, error_on_get_data):
 
 
 # Our config flow also has an options flow, so we must test it as well.
+@pytest.mark.skip(reason="optional config flow test is currently deactivated")
 async def test_options_flow(hass):
     """Test an options flow."""
     # Create a new MockConfigEntry and add to HASS (we're bypassing config
