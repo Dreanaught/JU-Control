@@ -1,6 +1,8 @@
 """Sensor platform for ju_control."""
 from homeassistant.components.sensor import SensorEntity
 
+from homeassistant.const import VOLUME_LITERS
+
 from .const import DEFAULT_NAME, DOMAIN, ICON, SENSOR
 from .entity import JuControlEntity
 
@@ -13,6 +15,8 @@ async def async_setup_entry(hass, entry, async_add_devices):
 
 class JuControlSensor(JuControlEntity, SensorEntity):
     """ju_control Sensor class."""
+
+    _attr_native_unit_of_measurement = VOLUME_LITERS
 
     @property
     def name(self):
