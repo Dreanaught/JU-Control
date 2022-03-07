@@ -53,6 +53,11 @@ class JuControlApiClient:
     async def async_get_data(self) -> dict:
         """Get data from the API."""
         _LOGGER.info("GetData uses token: %s", self._token)
+        if self._token is None:
+            successful = await log_in()
+            if not successful:
+                _LOGGER.error("LogIn during get data failed")
+        
         query = {
             "token": self._token,
             "group": "register",
