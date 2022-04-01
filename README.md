@@ -125,6 +125,21 @@ custom_components/ju_control/switch.py
 
 ## Configuration is done in the UI
 
+# Using mermain is fun!
+```mermaid
+sequenceDiagram
+participant Alice
+participant Bob
+Alice->>John: Hello John, how are you?
+loop Healthcheck
+    John->>John: Fight against hypochondria
+end
+Note right of John: Rational thoughts!
+John-->>Alice: Great!
+John->>Bob: How about you?
+Bob-->>John: Jolly good!
+```
+
 <!---->
 
 ## Contributions are welcome!
