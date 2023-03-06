@@ -1,12 +1,12 @@
 {
   "domain": "ju_control",
   "name": "JU-Control",
+  "codeowners": [
+    "@Dreanaught"
+  ],
+  "config_flow": true,
   "documentation": "https://github.com/Dreanaught/JU-Control",
   "iot_class": "cloud_polling",
   "issue_tracker": "https://github.com/Dreanaught/JU-Control/issues",
-  "version": "0.0.14",
-  "config_flow": true,
-  "codeowners": [
-    "@Dreanaught"
-  ]
+  "version": "0.0.14"
 }
