@@ -1,2 +1,2 @@
-pytest-homeassistant-custom-component==0.13.101
-async-timeout==4.0.3
+pytest-homeassistant-custom-component==0.13.6
+
