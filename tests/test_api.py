@@ -7,7 +7,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from custom_components.ju_control.api import JuControlApiClient
 
-
+@pytest.mark.asyncio
 @pytest.mark.skip(reason="api test is currently deactivated")
 async def test_api(hass, aioclient_mock, caplog):
     """Test API calls."""
